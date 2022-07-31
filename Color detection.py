@@ -51,10 +51,7 @@ while True:
     # Draw framerate in corner of frame
     cv2.putText(video, 'FPS: {0:.2f}'.format(frame_rate_calc), (cx - 300 , cy + 230), 0, 1, (255,255,255), 4)          
 
-    cv2.imshow("mask image", mask) # Displaying mask image
-    cv2.imshow("mask image2", mask2) # Displaying mask image
-
-    cv2.imshow("window", video) # Displaying webcam image
+    cv2.imshow("Health Code Detector", video) # Displaying webcam image
     
     # Calculate framerate
     t2 = cv2.getTickCount()
