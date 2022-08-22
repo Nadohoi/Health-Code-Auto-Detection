@@ -1,4 +1,5 @@
 # Color-Detection-Raspberry-Pi
 
+## Ver.1
 ### Currently developing by Nadohoi
-### Details will be added soon
+### Added Color-detection and Color-adjustment tool
