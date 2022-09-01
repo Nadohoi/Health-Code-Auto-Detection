@@ -1,5 +1,5 @@
 # Offical release by Nadohoi
-# Ver 1.1 developing
+# Ver 1.1
 
 # Importing all modules
 import cv2
