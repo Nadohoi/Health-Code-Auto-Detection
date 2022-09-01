@@ -1,5 +1,5 @@
 # Offical release by Nadohoi
-# Ver.1.1 developing
+# Ver 1.1 developing
 
 # Importing all modules
 import cv2
@@ -14,6 +14,7 @@ upper_orange = np.array([13, 225, 225]) # (These ranges will detect Orange)
 lower_green = np.array([55, 65, 55])
 upper_green = np.array([85, 255, 255])  # (These ranges will detect Green)
 
+# Creating definition for threading
 def get_red():
     mask = cv2.inRange(img, lower_orange, upper_orange) # Masking the image to find our color
     mask_contours, hierarchy = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) # Finding contours in mask image
