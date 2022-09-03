@@ -1,4 +1,4 @@
-# Offical release by Nadohoi
+# Release Update by Nadohoi
 # Ver 1.1
 
 # Importing all modules
