@@ -1,4 +1,4 @@
-# Color-Detection-Raspberry-Pi
+# Health-Code-Detection-Raspberry-Pi
 
 
 ## Ver 1.1
