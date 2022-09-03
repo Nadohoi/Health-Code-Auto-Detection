@@ -1,11 +1,15 @@
 # Offical release by Nadohoi
-# Ver 1.1
+# Ver 2.0
+# Only For Raspberry Pi
 
 # Importing all modules
 import cv2
 import numpy as np
 import threading
-import 
+import board
+import adafruit_mlx90614
+import busio as io
+
 # Specifying upper and lower ranges of color to detect in hsv format
 lower_red = np.array([0, 60, 60])
 upper_red = np.array([6, 255, 255])     # (These rangers will detect Red)
@@ -13,6 +17,10 @@ lower_orange = np.array([5, 100, 150])
 upper_orange = np.array([13, 225, 225]) # (These ranges will detect Orange)
 lower_green = np.array([55, 65, 55])
 upper_green = np.array([85, 255, 255])  # (These ranges will detect Green)
+
+# Locating mlx90614's i2c
+i2c = io.I2C(board.SCL,board.SCA, frequency=100000)
+mlx = adafruit_mlx90614.MLX90614(i2c)
 
 # Creating definition for threading
 def get_red():
@@ -48,6 +56,10 @@ def get_green():
                 x, y, w, h = cv2.boundingRect(mask_contour)
                 cv2.rectangle(video, (x, y), (x + w, y + h), (0, 0, 255), 3) # Drawing rectangle
 
+def get_temp():
+    obj_temp = mlx.object_temperature
+    amb_temp = mlx.ambient_temperature
+
 # Capturing webcam footage
 webcam_video = cv2.VideoCapture(0)
 webcam_video.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
@@ -70,18 +82,22 @@ while True:
     thread1 = threading.Thread(target=get_red())
     thread2 = threading.Thread(target=get_orange())
     thread3 = threading.Thread(target=get_green())
+    thread4 = threading.Thread(target=get_temp())
     
     thread1.start()
     thread2.start()
     thread3.start()
+    thread4.start()
     
     thread1.join()
     thread2.join()
     thread3.join()
+    thread4.join()
     
     # Draw framerate in corner of frame
-    cv2.putText(video, "FPS: {0:.2f}".format(frame_rate_calc), (cx - 300 , cy + 230), 0, 1, (255,255,255), 4)          
-
+    cv2.putText(video, "FPS: {0:.2f}".format(frame_rate_calc), (cx - 300 , cy + 230), 0, 1, (255,255,255), 4)
+    cv2.putText(video, "TEMP: " + str(obj_temp), (cx - 300 , cy - 230), 0, 1, (255,255,255), 4)          
+    
     cv2.imshow("window", video) # Displaying webcam image
     
     # Calculate framerate
