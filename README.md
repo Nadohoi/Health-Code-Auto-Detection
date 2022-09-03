@@ -2,7 +2,7 @@
 
 
 ## Ver 1.1
-### Currently developing by Nadohoi
+### Added red detection and optimized code
 ### Thank you @思念跟影子被拉開 for testing the code
 
 ## Ver 1
