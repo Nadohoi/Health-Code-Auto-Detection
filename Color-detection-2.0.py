@@ -3,8 +3,8 @@
 # Only For Raspberry Pi
 
 # Importing all modules
-import cv2
-import numpy as np
+import cv2 # pip3 install opencv (must be version 4)
+import numpy as np # pip3 install numpy
 import threading
 import board
 import adafruit_mlx90614
