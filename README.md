@@ -1,13 +1,12 @@
 # Health-Code-Detection-Raspberry-Pi
 
 ## Ver 2.0
-### Color-detection tool
-#### Added Temperature Monitor
-#### Only for Raspberry Pi
+### Color-detection: Added Temperature Monitor
+### Only for Raspberry Pi
+### Color-detection tool is divided into 2 versions
 
 ## Ver 1.1
-### Color-detection tool
-#### Added red detection and optimized code
+### Color-detection: Added red detection and optimized code
 ### Thank you @思念跟影子被拉開 for testing the code
 
 ## Ver 1
