@@ -2,8 +2,8 @@
 
 ## Ver 2.0
 ### Color-detection: Added Temperature Monitor
-### Only for Raspberry Pi
-### Color-detection tool is divided into 2 versions
+### Color-detection: Only for Raspberry Pi
+### Color-detection: tool is divided into 2 versions
 
 ## Ver 1.1
 ### Color-detection: Added red detection and optimized code
