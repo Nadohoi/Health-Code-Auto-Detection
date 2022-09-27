@@ -4,6 +4,7 @@
 ### Color-detection: Added Temperature Monitoring
 ### Color-detection: Only for Raspberry Pi
 ### Color-detection: tool is divided into 2 versions
+### Added Webcam Testing tool
 
 ## Ver 1.1
 ### Color-detection: Added red detection and optimized code
