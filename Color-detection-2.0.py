@@ -23,43 +23,60 @@ i2c = io.I2C(board.SCL,board.SCA, frequency=100000)
 mlx = adafruit_mlx90614.MLX90614(i2c)
 
 # Creating definition for threading
-def get_red():
-    mask = cv2.inRange(img, lower_orange, upper_orange) # Masking the image to find our color
-    mask_contours, hierarchy = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) # Finding contours in mask image
-    
-    if len(mask_contours) != 0:
-        for mask_contour in mask_contours:
-            if cv2.contourArea(mask_contour) > 500:
-                    cv2.putText(video, "STOP", (cx + 200, cy + 230), 0, 1, (255, 255, 255), 4)
+class get:
+    def red(self):
+        mask = cv2.inRange(img, lower_orange, upper_orange) # Masking the image to find our color
+        mask_contours, hierarchy = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) # Finding contours in mask image
+
+        if len(mask_contours) != 0:
+            for mask_contour in mask_contours:
+                if cv2.contourArea(mask_contour) > 500:
+                        cv2.putText(video, "STOP", (cx + 200, cy + 230), 0, 1, (255, 255, 255), 4)
+                        x, y, w, h = cv2.boundingRect(mask_contour)
+                        cv2.rectangle(video, (x, y), (x + w, y + h), (0, 0, 255), 3) # Drawing rectangle
+
+    def orange(self):
+        mask = cv2.inRange(img, lower_orange, upper_orange) # Masking the image to find our color
+        mask_contours, hierarchy = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) # Finding contours in mask image
+
+        if len(mask_contours) != 0:
+            for mask_contour in mask_contours:
+                if cv2.contourArea(mask_contour) > 500:
+                        cv2.putText(video, "STOP", (cx + 200, cy + 230), 0, 1, (255, 255, 255), 4)
+                        x, y, w, h = cv2.boundingRect(mask_contour)
+                        cv2.rectangle(video, (x, y), (x + w, y + h), (0, 0, 255), 3) # Drawing rectangle
+
+    def green(self):
+        mask2 = cv2.inRange(img, lower_green, upper_green)
+        mask_contours2, hierarchy2 = cv2.findContours(mask2, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) # Finding contours in mask image
+
+        if len(mask_contours2) != 0:
+            for mask_contour in mask_contours2:
+                if cv2.contourArea(mask_contour) > 150:
+                    cv2.putText(video, "GO", (cx + 200, cy + 230), 0, 1, (255, 255, 255), 4)
                     x, y, w, h = cv2.boundingRect(mask_contour)
                     cv2.rectangle(video, (x, y), (x + w, y + h), (0, 0, 255), 3) # Drawing rectangle
 
-def get_orange():
-    mask = cv2.inRange(img, lower_orange, upper_orange) # Masking the image to find our color
-    mask_contours, hierarchy = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) # Finding contours in mask image
+    def temp(self):
+        obj_temp = mlx.object_temperature
+        amb_temp = mlx.ambient_temperature
+
+class multithreading:
+    thread1 = threading.Thread(target=get().red())
+    thread2 = threading.Thread(target=get().orange())
+    thread3 = threading.Thread(target=get().green())
+    thread4 = threading.Thread(target=get().temp())
     
-    if len(mask_contours) != 0:
-        for mask_contour in mask_contours:
-            if cv2.contourArea(mask_contour) > 500:
-                    cv2.putText(video, "STOP", (cx + 200, cy + 230), 0, 1, (255, 255, 255), 4)
-                    x, y, w, h = cv2.boundingRect(mask_contour)
-                    cv2.rectangle(video, (x, y), (x + w, y + h), (0, 0, 255), 3) # Drawing rectangle
-
-def get_green():
-    mask2 = cv2.inRange(img, lower_green, upper_green)
-    mask_contours2, hierarchy2 = cv2.findContours(mask2, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) # Finding contours in mask image
+    thread1.start()
+    thread2.start()
+    thread3.start()
+    thread4.start()
     
-    if len(mask_contours2) != 0:
-        for mask_contour in mask_contours2:
-            if cv2.contourArea(mask_contour) > 150:
-                cv2.putText(video, "GO", (cx + 200, cy + 230), 0, 1, (255, 255, 255), 4)
-                x, y, w, h = cv2.boundingRect(mask_contour)
-                cv2.rectangle(video, (x, y), (x + w, y + h), (0, 0, 255), 3) # Drawing rectangle
-
-def get_temp():
-    obj_temp = mlx.object_temperature
-    amb_temp = mlx.ambient_temperature
-
+    thread1.join()
+    thread2.join()
+    thread3.join()
+    thread4.join()
+    
 # Capturing webcam footage
 webcam_video = cv2.VideoCapture(0)
 webcam_video.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
@@ -79,20 +96,7 @@ while True:
     cx = int(width / 2)
     cy = int(height / 2)
     
-    thread1 = threading.Thread(target=get_red())
-    thread2 = threading.Thread(target=get_orange())
-    thread3 = threading.Thread(target=get_green())
-    thread4 = threading.Thread(target=get_temp())
-    
-    thread1.start()
-    thread2.start()
-    thread3.start()
-    thread4.start()
-    
-    thread1.join()
-    thread2.join()
-    thread3.join()
-    thread4.join()
+    multithreading()
     
     # Draw framerate in corner of frame
     cv2.putText(video, "FPS: {0:.2f}".format(frame_rate_calc), (cx - 300 , cy + 230), 0, 1, (255,255,255), 4)
