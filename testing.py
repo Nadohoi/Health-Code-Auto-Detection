@@ -23,24 +23,16 @@ codeinfo, points, straight_qrcode = qrcoder.detectAndDecode(src_image)
 cv2.drawContours(src_image, [np.int32(points)], 0, (0, 0, 255), 2)
 
 cv2.imshow("result", src_image)
+print(np.int32(points))
 cv2.waitKey(0)
 
+index_point = np.int32(points)
 
-#rect = four_point_transform(src_image, np.int32(points))
-#cv2.imwrite('poke_rect.png', rect)
-#cv2.imshow("rect", rect)
+rect = four_point_transform(src_image, index_point.reshape(4, 2))
 
+cv2.imwrite('poke_rect.png', rect)
+cv2.imshow("rect", rect)
 
-
-
-#cv2.namedWindow("img")
-
-#while True:
-    #cv2.imshow('img', image)
-    #if cv2.waitKey() == ord('q'):
-        #break
-
-
-#cv2.waitKey(0)
-#cv2.destroyAllWindows()
+cv2.waitKey(0)
+cv2.destroyAllWindows()
         
