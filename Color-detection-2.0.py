@@ -23,49 +23,48 @@ i2c = io.I2C(board.SCL,board.SCA, frequency=100000)
 mlx = adafruit_mlx90614.MLX90614(i2c)
 
 # Creating definition for threading
-class get:
-    def red(self):
-        mask = cv2.inRange(img, lower_orange, upper_orange) # Masking the image to find our color
-        mask_contours, hierarchy = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) # Finding contours in mask image
+def red():
+    mask = cv2.inRange(img, lower_red, upper_red) # Masking the image to find our color
+    mask_contours, hierarchy = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) # Finding contours in mask image
 
-        if len(mask_contours) != 0:
-            for mask_contour in mask_contours:
-                if cv2.contourArea(mask_contour) > 500:
-                        cv2.putText(video, "STOP", (cx + 200, cy + 230), 0, 1, (255, 255, 255), 4)
-                        x, y, w, h = cv2.boundingRect(mask_contour)
-                        cv2.rectangle(video, (x, y), (x + w, y + h), (0, 0, 255), 3) # Drawing rectangle
-
-    def orange(self):
-        mask = cv2.inRange(img, lower_orange, upper_orange) # Masking the image to find our color
-        mask_contours, hierarchy = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) # Finding contours in mask image
-
-        if len(mask_contours) != 0:
-            for mask_contour in mask_contours:
-                if cv2.contourArea(mask_contour) > 500:
-                        cv2.putText(video, "STOP", (cx + 200, cy + 230), 0, 1, (255, 255, 255), 4)
-                        x, y, w, h = cv2.boundingRect(mask_contour)
-                        cv2.rectangle(video, (x, y), (x + w, y + h), (0, 0, 255), 3) # Drawing rectangle
-
-    def green(self):
-        mask2 = cv2.inRange(img, lower_green, upper_green)
-        mask_contours2, hierarchy2 = cv2.findContours(mask2, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) # Finding contours in mask image
-
-        if len(mask_contours2) != 0:
-            for mask_contour in mask_contours2:
-                if cv2.contourArea(mask_contour) > 150:
-                    cv2.putText(video, "GO", (cx + 200, cy + 230), 0, 1, (255, 255, 255), 4)
+    if len(mask_contours) != 0:
+        for mask_contour in mask_contours:
+            if cv2.contourArea(mask_contour) > 500:
+                    cv2.putText(video, "STOP", (cx + 200, cy + 230), 0, 1, (255, 255, 255), 4)
                     x, y, w, h = cv2.boundingRect(mask_contour)
                     cv2.rectangle(video, (x, y), (x + w, y + h), (0, 0, 255), 3) # Drawing rectangle
 
-    def temp(self):
-        obj_temp = mlx.object_temperature
-        amb_temp = mlx.ambient_temperature
+def orange():
+    mask2 = cv2.inRange(img, lower_orange, upper_orange) # Masking the image to find our color
+    mask_contours2, hierarchy2 = cv2.findContours(mask2, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) # Finding contours in mask image
+
+    if len(mask_contours2) != 0:
+        for mask_contour in mask_contour2:
+            if cv2.contourArea(mask_contour) > 500:
+                    cv2.putText(video, "STOP", (cx + 200, cy + 230), 0, 1, (255, 255, 255), 4)
+                    x, y, w, h = cv2.boundingRect(mask_contour)
+                    cv2.rectangle(video, (x, y), (x + w, y + h), (0, 0, 255), 3) # Drawing rectangle
+
+def green(self):
+    mask3 = cv2.inRange(img, lower_green, upper_green)
+    mask_contours3, hierarchy3 = cv2.findContours(mask3, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) # Finding contours in mask image
+
+    if len(mask_contours3) != 0:
+        for mask_contour in mask_contours3:
+            if cv2.contourArea(mask_contour) > 150:
+                cv2.putText(video, "GO", (cx + 200, cy + 230), 0, 1, (255, 255, 255), 4)
+                x, y, w, h = cv2.boundingRect(mask_contour)
+                cv2.rectangle(video, (x, y), (x + w, y + h), (0, 0, 255), 3) # Drawing rectangle
+
+def temp(self):
+    obj_temp = mlx.object_temperature
+    amb_temp = mlx.ambient_temperature
 
 class multithreading:
-    thread1 = threading.Thread(target=get().red())
-    thread2 = threading.Thread(target=get().orange())
-    thread3 = threading.Thread(target=get().green())
-    thread4 = threading.Thread(target=get().temp())
+    thread1 = threading.Thread(target=red())
+    thread2 = threading.Thread(target=orange())
+    thread3 = threading.Thread(target=green())
+    thread4 = threading.Thread(target=temp())
     
     thread1.start()
     thread2.start()
