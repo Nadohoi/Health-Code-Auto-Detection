@@ -1,8 +1,10 @@
 # Release Update by Nadohoi
-# Ver 1.1
+# Ver 2.0
 
 # Importing all modules
+from imutils.perspective import four_point_transform
 import cv2
+import numpy as np
 
 # Capturing webcam footage
 cap = cv2.VideoCapture(0)
@@ -10,10 +12,16 @@ cap = cv2.VideoCapture(0)
 # Taking a picture
 while True:
     success, frame = cap.read()
+
+    detector = cv2.QRCodeDetector()
+    data, bbox, _ = detector.detectAndDecode(frame)
+    if bbox is not None:
+        index_point = np.int32(bbox)
+        rect = four_point_transform(frame, index_point.reshape(4, 2))
+        
     cv2.imshow("frame", frame)
-    
     if cv2.waitKey(1) == ord("q"):
-        out = cv2.imwrite("capture.png", frame)
+        out = cv2.imwrite("capture.png", rect)
         break
 
 cap.release()
