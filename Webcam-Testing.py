@@ -10,10 +10,7 @@ webcam_video.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
 webcam_video.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
 while True:
-    success, video = webcam_video.read() # Reading webcam footage
-    img = cv2.cvtColor(video, cv2.COLOR_BGR2HSV) # Converting BGR image to HSV format
-    height, width, _ = img.shape
-    
+    success, video = webcam_video.read() # Reading webcam footage   
     cv2.imshow("window", video) # Displaying webcam image
 
     key = cv2.waitKey(1)
