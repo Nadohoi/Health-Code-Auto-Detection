@@ -1,4 +1,4 @@
-# Health-Code-Detection-Raspberry-Pi
+# Health-Code-Auto-Detection
 
 ## Ver 3.0
 ### In development
