@@ -1,7 +1,10 @@
 # Health-Code-Detection-Raspberry-Pi
 
+## Ver 3.0
+### In development
+
 ## Ver 2.0
-### Color-detection: tool is divided into 2 versions
+### Color-detection: The program is divided into 2 versions
 ### Added Webcam Testing tool
 
 ## Ver 1.1
